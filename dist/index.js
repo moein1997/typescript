@@ -236,7 +236,7 @@ class Car {
         this.speed = speed;
         this.color = color;
         this._milage = _milage;
-        Car.quantity++;
+        Car._quantity++;
     }
     get info() {
         return `
@@ -255,12 +255,18 @@ class Car {
             throw Error("Milage can not be negative");
         }
     }
+    get milage() {
+        return this._milage;
+    }
     get age() {
         const date = new Date();
         return date.getFullYear() - this.year;
     }
+    static get quantity() {
+        return Car._quantity;
+    }
 }
-Car.quantity = 0;
+Car._quantity = 0;
 const BMW_X4 = new Car("BMW_X4", 2024, 280, "Black");
 console.log(BMW_X4.info);
 BMW_X4.milage = 20;
@@ -286,3 +292,62 @@ const car2 = new Car("car1", 2024, 280, "Black");
 const car3 = new Car("car1", 2024, 280, "Black");
 const car4 = new Car("car1", 2024, 280, "Black");
 console.log(Car.quantity);
+console.log("**************************************************************************");
+class Shape {
+    constructor(width, length) {
+        this.width = width;
+        this.length = length;
+    }
+    sayHello() {
+        console.log("Hello Friend");
+    }
+    calculateArea() {
+        console.log("calculateArea method in shape class");
+    }
+    calculatePreimeter() {
+        console.log("calculatePreimeter method in shape class");
+    }
+}
+;
+class Rect extends Shape {
+    constructor(width, length, color) {
+        super(width, length);
+        this.color = color;
+    }
+    getColor() {
+        return this.color;
+    }
+    calculateArea() {
+        console.log("calculateArea method in Rect class");
+        return this.width * this.length;
+    }
+    calculatePreimeter() {
+        console.log("calculatePreimeter method in Rect class");
+        return (this.width + this.length) * 2;
+    }
+}
+;
+console.log("**************************************************************************");
+const shape = new Shape(10, 5);
+shape.calculateArea();
+shape.calculatePreimeter();
+console.log("**************************************************************************");
+const rectang1 = new Rect(10, 5, "red");
+rectang1.sayHello();
+rectang1.calculateArea();
+rectang1.calculatePreimeter();
+rectang1.getColor();
+console.log("**************************************************************************");
+class ElecticCar extends Car {
+    constructor(title, year, speed, color, _milage = 0, batteryCapacity) {
+        super(title, year, speed, color, _milage);
+        this.batteryCapacity = batteryCapacity;
+    }
+    get info() {
+        return `${super.info}
+            battery capacity : ${this.batteryCapacity}
+        `;
+    }
+}
+const teslaModelS = new ElecticCar("Tesla series S", 2024, 280, "Black", 1000, 20000);
+console.log(teslaModelS.info);

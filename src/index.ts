@@ -421,12 +421,16 @@ class Car {
         }
     }
 
+    get milage() : number{
+        return this._milage;
+    }
+
     get age() : number{
         const date = new Date();
         return date.getFullYear() - this.year;
     }
 
-    get quantity() : number{
+    static get quantity() : number{
         return Car._quantity;
     }
 }
@@ -470,3 +474,251 @@ const car3 = new Car("car1",2024,280,"Black");
 const car4 = new Car("car1",2024,280,"Black");
 
 console.log(Car.quantity);
+
+console.log("**************************************************************************");
+
+class Shape{
+
+    constructor(public width : number,public length : number){}
+
+    sayHello(){
+        console.log("Hello Friend");
+    }
+
+    calculateArea(){
+        console.log("calculateArea method in shape class")
+    }
+
+    calculatePreimeter(){
+        console.log("calculatePreimeter method in shape class")
+    }
+};
+
+class Rect extends Shape{
+    constructor(width : number , length : number, public color : string){
+        super(width,length)
+    }
+
+    getColor(){
+        return this.color;
+    }
+
+    override calculateArea() : number{
+        console.log("calculateArea method in Rect class");
+        return this.width * this.length;
+    }
+
+    override calculatePreimeter() : number{
+        console.log("calculatePreimeter method in Rect class");
+        return (this.width + this.length)*2;
+    }
+};
+
+console.log("**************************************************************************");
+
+const shape = new Shape(10,5);
+
+shape.calculateArea();
+
+shape.calculatePreimeter();
+
+console.log("**************************************************************************");
+
+
+const rectang1 = new Rect(10,5,"red");
+
+rectang1.sayHello();
+
+rectang1.calculateArea();
+
+rectang1.calculatePreimeter();
+
+rectang1.getColor();
+
+console.log("**************************************************************************");
+
+class ElecticCar extends Car{
+    constructor(
+        title : string,
+        year : number,
+        speed : number,
+        color : string,
+        _milage : number = 0,
+        public batteryCapacity : number
+    ){
+            super(
+                title,
+                year,
+                speed,
+                color,
+                _milage
+            )
+        }
+
+    override get info(): string {
+        return `${super.info}
+            battery capacity : ${this.batteryCapacity}
+        `
+    }
+    
+}
+
+const teslaModelS = new ElecticCar("Tesla series S",2024,280,"Black",1000,20000);
+
+console.log(teslaModelS.info);
+
+console.log("**************************************************************************");
+
+class GasCar extends Car{
+    constructor(
+        title : string,
+        year : number,
+        speed : number,
+        color : string,
+        _milage : number = 0,
+        public fuelEconomy : number
+    ){
+            super(
+                title,
+                year,
+                speed,
+                color,
+                _milage
+            )
+        }
+
+    override get info(): string {
+        return `${super.info}
+            Fuel economy : ${this.fuelEconomy}
+        `
+    }
+    
+}
+
+const MercedesS500 = new ElecticCar("Mercedes S 500",2024,280,"Black",1000,20000);
+
+console.log(MercedesS500.info);
+
+console.log("**************************************************************************");
+
+const enum categ {
+    hygiene = "hygiene",
+    food = "food",
+    electrical = "electrical"
+}
+
+class ProductClass{
+    constructor(
+        private _discountPercentage : number,
+        private _price : number,
+        private _stock : number,
+        private _maxDiscount : number,
+        public title : string,
+        public brand : string,
+        public description : string,
+        public category : categ,
+        public image? : string,
+    ){};
+
+    get discount(): number{
+        return this._discountPercentage;
+    };
+    
+    get price() : number{
+        return this._price;
+    };
+
+    get stock() : number{
+        return this._stock;
+    };
+
+    set discount(newDiscount : number){
+        this._discountPercentage = newDiscount;
+    };
+
+    get info() : string{
+        return `
+            title : ${this.title}\n
+            brand : ${this.brand}\n
+            category : ${this.category}\n
+            description : ${this.description}\n
+            stock : ${this._stock}\n
+            price : ${this._price}\n
+            discount : ${this._discountPercentage}\n
+            image : ${this.image}\n
+        `
+    }
+
+    get finalPrice() : number{
+        const discount_amount = this._price * (this._discountPercentage/100)
+        if(discount_amount < this._maxDiscount){
+            return this._price - discount_amount;
+        }else{
+            return this._price - this._maxDiscount;
+        }
+    }
+}
+
+console.log("**************************************************************************");
+
+class Hygiene extends ProductClass{
+    constructor(
+        discountPercentage : number,
+        price : number,
+        stock : number,
+        maxDiscount : number,
+        title : string,
+        brand : string,
+        description : string,
+        category : categ,
+        image? : string,
+    ){
+        super(
+            discountPercentage,
+            price,
+            stock,
+            maxDiscount,
+            title,
+            brand,
+            description,
+            category,
+            image
+        )
+    }
+}
+
+console.log("**************************************************************************");
+
+class Food extends ProductClass{
+    constructor(
+        public expireDate : Date,
+        discountPercentage : number,
+        price : number,
+        stock : number,
+        maxDiscount : number,
+        title : string,
+        brand : string,
+        description : string,
+        category : categ,
+        image? : string,
+    ){
+        super(
+            discountPercentage,
+            price,
+            stock,
+            maxDiscount,
+            title,
+            brand,
+            description,
+            category,
+            image
+        )
+    }
+
+    override get info() : string{
+        return `
+            ${super.info}
+            expire date : ${this.expireDate}
+        `
+    }
+}
