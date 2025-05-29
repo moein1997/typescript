@@ -607,7 +607,7 @@ const enum categ {
     electrical = "electrical"
 }
 
-class ProductClass{
+abstract class ProductClass{
     constructor(
         private _discountPercentage : number,
         private _price : number,
@@ -627,6 +627,14 @@ class ProductClass{
     get price() : number{
         return this._price;
     };
+
+    set price(new_price : number){
+        if(new_price >= 0){
+            this.price = new_price
+        }else{
+            console.log("price can not be negative");
+        }
+    }
 
     get stock() : number{
         return this._stock;
@@ -722,3 +730,123 @@ class Food extends ProductClass{
         `
     }
 }
+
+console.log("**************************************************************************");
+
+abstract class ShapeNew{
+    constructor(public color : string){}
+
+    abstract calculateArea() : number;
+
+    abstract calculatePerimeter() : number
+}
+
+class RectangleNew extends ShapeNew{
+    constructor(public width : number, public height : number,color : string){
+        super(color);
+    }
+
+    override calculateArea(): number {
+        return this.height * this.width;
+    }
+
+    override calculatePerimeter(): number {
+        return (this.width + this.height)*2;
+    }
+}
+
+const rectangleNew = new RectangleNew(3,5,"green");
+
+console.log("Area: ", rectangleNew.calculateArea());
+
+console.log("Perimeter: ", rectangleNew.calculatePerimeter());
+
+console.log("**************************************************************************");
+
+class CircleNew extends ShapeNew{
+    constructor(public radius : number, color : string){
+        super(color);
+    }
+    override calculateArea(): number {
+        return 3.141592 * (this.radius **2);
+    }
+
+    override calculatePerimeter(): number {
+        return 2*3.141592*this.radius;
+    }
+}
+
+const circleNew = new CircleNew(4,"green");
+
+console.log("Area: ", circleNew.calculateArea());
+
+console.log("Perimeter: ", circleNew.calculatePerimeter());
+
+console.log("**************************************************************************");
+
+interface ShapeInterface {
+    calculateArea() : number;
+    calculatePerimeter() : number
+}
+
+interface ColorInterface {
+    color : string;
+    getColor() : string;
+}
+
+class Square implements ShapeInterface , ColorInterface{
+    constructor(public color : string, public size : number){}
+    calculateArea(): number {
+        return this.size **2;
+    }
+    calculatePerimeter(): number {
+        return 4*this.size; 
+    }
+
+    getColor() : string{
+        return this.color;
+    }
+}
+
+const square = new Square("red",3);
+
+console.log("Area: ", square.calculateArea());
+
+console.log("Perimeter: ", square.calculatePerimeter());
+
+console.log("**************************************************************************");
+
+
+interface CalculateShapeAreaAndPerimeterInterface {
+    calculateArea() : number;
+    calculatePerimeter() : number
+}
+
+interface ColorInterface {
+    color : string;
+    getColor() : string;
+}
+
+interface ShapeNewInterface extends CalculateShapeAreaAndPerimeterInterface , ColorInterface {
+
+}
+
+class SquareNew implements ShapeNewInterface{
+    constructor(public color : string, public size : number){}
+    calculateArea(): number {
+        return this.size **2;
+    }
+    calculatePerimeter(): number {
+        return 4*this.size; 
+    }
+
+    getColor() : string{
+        return this.color;
+    }
+}
+
+const squareNew = new Square("red",3);
+
+console.log("Area: ", squareNew.calculateArea());
+
+console.log("Perimeter: ", squareNew.calculatePerimeter()); 

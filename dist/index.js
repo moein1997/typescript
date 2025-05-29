@@ -351,3 +351,150 @@ class ElecticCar extends Car {
 }
 const teslaModelS = new ElecticCar("Tesla series S", 2024, 280, "Black", 1000, 20000);
 console.log(teslaModelS.info);
+console.log("**************************************************************************");
+class GasCar extends Car {
+    constructor(title, year, speed, color, _milage = 0, fuelEconomy) {
+        super(title, year, speed, color, _milage);
+        this.fuelEconomy = fuelEconomy;
+    }
+    get info() {
+        return `${super.info}
+            Fuel economy : ${this.fuelEconomy}
+        `;
+    }
+}
+const MercedesS500 = new ElecticCar("Mercedes S 500", 2024, 280, "Black", 1000, 20000);
+console.log(MercedesS500.info);
+console.log("**************************************************************************");
+class ProductClass {
+    constructor(_discountPercentage, _price, _stock, _maxDiscount, title, brand, description, category, image) {
+        this._discountPercentage = _discountPercentage;
+        this._price = _price;
+        this._stock = _stock;
+        this._maxDiscount = _maxDiscount;
+        this.title = title;
+        this.brand = brand;
+        this.description = description;
+        this.category = category;
+        this.image = image;
+    }
+    ;
+    get discount() {
+        return this._discountPercentage;
+    }
+    ;
+    get price() {
+        return this._price;
+    }
+    ;
+    set price(new_price) {
+        if (new_price >= 0) {
+            this.price = new_price;
+        }
+        else {
+            console.log("price can not be negative");
+        }
+    }
+    get stock() {
+        return this._stock;
+    }
+    ;
+    set discount(newDiscount) {
+        this._discountPercentage = newDiscount;
+    }
+    ;
+    get info() {
+        return `
+            title : ${this.title}\n
+            brand : ${this.brand}\n
+            category : ${this.category}\n
+            description : ${this.description}\n
+            stock : ${this._stock}\n
+            price : ${this._price}\n
+            discount : ${this._discountPercentage}\n
+            image : ${this.image}\n
+        `;
+    }
+    get finalPrice() {
+        const discount_amount = this._price * (this._discountPercentage / 100);
+        if (discount_amount < this._maxDiscount) {
+            return this._price - discount_amount;
+        }
+        else {
+            return this._price - this._maxDiscount;
+        }
+    }
+}
+console.log("**************************************************************************");
+class Hygiene extends ProductClass {
+    constructor(discountPercentage, price, stock, maxDiscount, title, brand, description, category, image) {
+        super(discountPercentage, price, stock, maxDiscount, title, brand, description, category, image);
+    }
+}
+console.log("**************************************************************************");
+class Food extends ProductClass {
+    constructor(expireDate, discountPercentage, price, stock, maxDiscount, title, brand, description, category, image) {
+        super(discountPercentage, price, stock, maxDiscount, title, brand, description, category, image);
+        this.expireDate = expireDate;
+    }
+    get info() {
+        return `
+            ${super.info}
+            expire date : ${this.expireDate}
+        `;
+    }
+}
+console.log("**************************************************************************");
+class ShapeNew {
+    constructor(color) {
+        this.color = color;
+    }
+}
+class RectangleNew extends ShapeNew {
+    constructor(width, height, color) {
+        super(color);
+        this.width = width;
+        this.height = height;
+    }
+    calculateArea() {
+        return this.height * this.width;
+    }
+    calculatePerimeter() {
+        return (this.width + this.height) * 2;
+    }
+}
+const rectangleNew = new RectangleNew(3, 5, "green");
+console.log("Area: ", rectangleNew.calculateArea());
+console.log("Perimeter: ", rectangleNew.calculatePerimeter());
+console.log("**************************************************************************");
+class CircleNew extends ShapeNew {
+    constructor(radius, color) {
+        super(color);
+        this.radius = radius;
+    }
+    calculateArea() {
+        return 3.141592 * (this.radius ** 2);
+    }
+    calculatePerimeter() {
+        return 2 * 3.141592 * this.radius;
+    }
+}
+const circleNew = new CircleNew(4, "green");
+console.log("Area: ", circleNew.calculateArea());
+console.log("Perimeter: ", circleNew.calculatePerimeter());
+console.log("**************************************************************************");
+class Square {
+    constructor(color, size) {
+        this.color = color;
+        this.size = size;
+    }
+    calculateArea() {
+        return this.size ** 2;
+    }
+    calculatePerimeter() {
+        return 4 * this.size;
+    }
+}
+const square = new Square("red", 3);
+console.log("Area: ", square.calculateArea());
+console.log("Perimeter: ", square.calculatePerimeter());
